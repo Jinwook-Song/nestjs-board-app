@@ -1,0 +1,15 @@
+server:
+  port: 3000
+
+db:
+  type: 'postgres'
+  port: 5432
+  database: 'board-app'
+  host: '172.19.192.1'
+  username: 'postgres'
+  password: 'kt7640kta'
+  synchronize: true
+
+jwt:
+  secret: 'secretKey7926'
+  expiresIn: 18000

@@ -6,16 +6,18 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { UserRepository } from './user.repository';
+import * as config from 'config';
 
+const jwtConfig = config.get('jwt');
 @Module({
   imports: [
     // 유저를 인증하기위해 사용할 기본 strategy를 명시해 주기, 여기서는 jwt
     PassportModule.register({ defaultStrategy: 'jwt' }),
     // jwt 인증 부분을 담당, 주로 sign()을 위한 부분이다.
     JwtModule.register({
-      secret: 'secretKey',
+      secret: jwtConfig.secret,
       signOptions: {
-        expiresIn: 3600 * 5, // 5시간 후 만료
+        expiresIn: jwtConfig.expiresIn, // 5시간 후 만료
       },
     }),
     TypeOrmModule.forFeature([UserRepository]),
