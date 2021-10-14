@@ -19,10 +19,12 @@ import { Board } from './board.entity';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
+import { Logger } from '@nestjs/common';
 
 @Controller('boards')
 @UseGuards(AuthGuard())
 export class BoardsController {
+  private logger = new Logger('Boards');
   constructor(private readonly boardsService: BoardsService) {}
 
   @Get()
@@ -32,6 +34,7 @@ export class BoardsController {
 
   @Get('mine')
   getMyBoards(@GetUser() user: User): Promise<Board[]> {
+    this.logger.verbose(`User ${user.username} trying to get all boards`);
     return this.boardsService.getMyBoards(user);
   }
 
@@ -41,6 +44,12 @@ export class BoardsController {
     @Body() createBoardDto: CreateBoardDto,
     @GetUser() user: User,
   ): Promise<Board> {
+    this.logger.verbose(
+      `User ${user.username} creating a new board. Payload: ${JSON.stringify(
+        createBoardDto,
+      )}`,
+    );
+
     return this.boardsService.createBoard(createBoardDto, user);
   }
 
