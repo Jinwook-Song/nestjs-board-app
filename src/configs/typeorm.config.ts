@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const typeORMConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: '172.31.128.1', // ipconfig (wsl) IPv4 주소
+  host: '172.19.192.1', // ipconfig (wsl) IPv4 주소
   port: 5432,
   username: 'postgres',
   password: 'kt7640kta',
